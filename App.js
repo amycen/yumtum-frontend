@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from '@expo/vector-icons/FontAwesome5'
 
 import {MultiBar, MultiBarToggle} from 'react-native-multibar';
 
@@ -16,16 +16,36 @@ import HopOnIt from "./screens/HopOnIt";
 import Settings from "./screens/Settings"
 
 import {createSwitchNavigator, createAppContainer, createDrawerNavigator, createBottomTabNavigator, createStackNavigator} from 'react-navigation'
+import { Provider, connect } from "react-redux"
+import { createUser } from './actions/user';
+import store from './store/store'
+
 
 class App extends Component {
+
+  state = {
+    username: ''
+  }
+
+  createUserSubmitHandler = () => {
+    alert("SUBMITTED USER")
+  }
+
+  createUserChangeHandler = username => {
+    this.setState({
+      username: username
+    })
+  }
+
   render(){
     return (
-      <AppContainer />
+        <Provider store={store}>
+          <AppContainer />
+        </Provider>
     )
   }
 }
 
-export default App
 
 const DiscoverStack = createStackNavigator({
   Discover: {
@@ -216,3 +236,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App

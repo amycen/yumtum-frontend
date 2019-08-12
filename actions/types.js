@@ -1,0 +1,9 @@
+const CREATE_USER = 'CREATE_USER'
+const LOGIN = 'LOGIN'
+const LOGIN_ERROR = 'LOGIN_ERROR'
+
+export {
+    CREATE_USER,
+    LOGIN,
+    LOGIN_ERROR
+}

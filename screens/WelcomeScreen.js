@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
 import {Input, Button} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from '@expo/vector-icons/FontAwesome5'
 
 class WelcomeScreen extends Component {
     render() {
         return (
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-                <Image 
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+                <ImageBackground 
                     style={{
                         position: 'absolute',
                         top: 0,
@@ -17,60 +16,64 @@ class WelcomeScreen extends Component {
                         height: '100%',
                         opacity: 0.75
                     }}
-                    source={{ uri: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1575&q=80'}}
-                    />
-                <Text style={styles.logo}>YUMTUM</Text>
-                <Text style={styles.sublogo}>Food At Your Fingertips</Text>
-                <Input
-                    placeholder='Full Name'
-                    leftIcon={
-                        <Icon
-                            name='user'
-                            size={24}
-                            color='black'
-                        />
-                    }
-                />
-                <Input
-                    placeholder='Email'
-                    leftIcon={
-                        <Icon
-                            name='envelope'
-                            size={24}
-                            color='black'
-                        />
-                    }
-                />
-                <Input
-                    placeholder='Password'
-                    leftIcon={
-                        <Icon
-                            name='lock'
-                            size={24}
-                            color='black'
-                        />
-                    }
-                />
-                <Input
-                    placeholder='Confirm Password'
-                    leftIcon={
-                        <Icon
-                            name='lock'
-                            size={24}
-                            color='black'
-                        />
-                    }
-                />
-                <Button title="Create Account" onPress={() => alert('button pressed for signup')} />
-                <Text>By creating an account, you agree to our <Text style={styles.link}>Terms</Text></Text>
-                    <Text>Already have an account?<Text
-                        style={styles.link}
-                        onPress={() => this.props.navigation.navigate('Login')}>
-                        Log In
-                    </Text>
-                </Text>
-            </View>
-          </TouchableWithoutFeedback>
+                    source={{ uri: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80'}}
+                >
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        <View style={styles.container}>
+                            <Text style={styles.logo}>YUMTUM</Text>
+                            <Text style={styles.sublogo}>Food At Your Fingertips</Text>
+                            <Input
+                                placeholder='Full Name'
+                                leftIcon={
+                                    <Icon
+                                        name='user'
+                                        size={24}
+                                        color='black'
+                                    />
+                                }
+                            />
+                            <Input
+                                placeholder='Email'
+                                leftIcon={
+                                    <Icon
+                                        name='envelope'
+                                        size={24}
+                                        color='black'
+                                    />
+                                }
+                            />
+                            <Input
+                                placeholder='Password'
+                                leftIcon={
+                                    <Icon
+                                        name='lock'
+                                        size={24}
+                                        color='black'
+                                    />
+                                }
+                            />
+                            <Input
+                                placeholder='Confirm Password'
+                                leftIcon={
+                                    <Icon
+                                        name='lock'
+                                        size={24}
+                                        color='black'
+                                    />
+                                }
+                            />
+                            <Button title="Create Account" onPress={() => alert('button pressed for signup')} />
+                            <Text>By creating an account, you agree to our <Text style={styles.link}>Terms</Text></Text>
+                                <Text>Already have an account?<Text
+                                    style={styles.link}
+                                    onPress={() => this.props.navigation.navigate('Login')}>
+                                    Log In
+                                </Text>
+                            </Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </ImageBackground>
+            </KeyboardAvoidingView>
         );
       }
 }

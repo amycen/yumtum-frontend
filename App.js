@@ -14,6 +14,8 @@ import Discover from "./screens/Discover";
 import FeelingLucky from "./screens/FeelingLucky"; 
 import HopOnIt from "./screens/HopOnIt"; 
 import Settings from "./screens/Settings"
+import Checkout from "./screens/Checkout"
+import Pay from "./screens/Pay"
 
 import {createSwitchNavigator, createAppContainer, createDrawerNavigator, createBottomTabNavigator, createStackNavigator} from 'react-navigation'
 import { Provider, connect } from "react-redux"
@@ -86,6 +88,22 @@ const ProfileStack = createStackNavigator({
     gesturesEnabled: false
   }
 })
+
+const CheckoutStackNavigator = createStackNavigator({
+    Checkout: {
+      screen: Checkout,
+      navigationOptions: ({navigation}) => {
+        return {
+          headerTitle: "Checkout",
+          headerLeft: 
+            <Icon name="chevron-left" size={30} style={{paddingLeft: 10}} onPress={() => navigation.navigate('Discover')}/>
+      }
+      }
+    },
+    Pay: { screen: Pay}
+  },{
+    defaultNavigationOptions: {gesturesEnabled: false}
+  })
 
 const DashboardTabNavigator = createBottomTabNavigator(
   {
@@ -223,7 +241,8 @@ const AppDrawerNavigator = createDrawerNavigator({
 const AppSwitchNavigator = createSwitchNavigator({
   Welcome: {screen: WelcomeScreen},
   Dashboard: {screen: AppDrawerNavigator},
-  Login: {screen: LoginScreen}
+  Login: {screen: LoginScreen},
+  Checkout: {screen: CheckoutStackNavigator}
 })
 
 const AppContainer = createAppContainer(AppSwitchNavigator)

@@ -1,21 +1,19 @@
-import {CREATE_USER, LOGIN, LOGIN_ERROR} from '../actions/types'
+import {CREATE_USER, LOGIN, USER_ERROR} from '../actions/types'
 
 const initialState = {
     firstName: '',
     lastName: '',
     userID: '',
-    username: 'TESTING USER',
+    phone: '',
     errors: ''
 }
 
 const userReducer = (prevState=initialState, action) => {
     switch(action.type) {
-        case LOGIN_ERROR:
+        case USER_ERROR:
             return {...prevState, errors: action.payload}
         case LOGIN:
-            return {...prevState, firstName: action.payload.firstName, lastName: action.payload.lastName, userID: action.payload.userID}
-        case CREATE_USER:
-            return {...prevState, username: action.payload}
+            return {...prevState, phone: action.payload.phone, firstName: action.payload.firstName, lastName: action.payload.lastName, userID: action.payload.userID}
         default:
             return prevState
     }

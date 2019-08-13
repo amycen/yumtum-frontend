@@ -27,6 +27,15 @@ class LoginScreen extends Component {
                       <LoginForm />
                       <Button title="Login" onPress={() => this.props.navigation.navigate('Dashboard')} />
                     </View>
+                    <View style={styles.footer}>
+                      <Text>Don't have an account?
+                          <Text
+                            style={styles.link}
+                            onPress={() => this.props.navigation.navigate('Welcome')}>
+                            Sigh Up Here! 
+                          </Text>
+                      </Text>
+                    </View>
                   </View>
                 </TouchableWithoutFeedback>
               </ImageBackground>
@@ -55,6 +64,14 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     alignItems: 'stretch'
+  },
+  footer: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  link: {
+      color: 'blue',
+      textDecorationLine: 'underline'
   }
 
 });

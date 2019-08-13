@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
 import {Input, Button} from 'react-native-elements'
 import Icon from '@expo/vector-icons/FontAwesome5'
+import CreateUserForm from '../components/CreateUserForm';
+import {connect} from 'react-redux'
+import {getAllItems} from '../actions/item'
 
 class WelcomeScreen extends Component {
+
+    componentDidMount() {
+        this.props.getAllItems()
+    }
+    
     render() {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -22,48 +30,8 @@ class WelcomeScreen extends Component {
                         <View style={styles.container}>
                             <Text style={styles.logo}>YUMTUM</Text>
                             <Text style={styles.sublogo}>Food At Your Fingertips</Text>
-                            <Input
-                                placeholder='Full Name'
-                                leftIcon={
-                                    <Icon
-                                        name='user'
-                                        size={24}
-                                        color='black'
-                                    />
-                                }
-                            />
-                            <Input
-                                placeholder='Email'
-                                leftIcon={
-                                    <Icon
-                                        name='envelope'
-                                        size={24}
-                                        color='black'
-                                    />
-                                }
-                            />
-                            <Input
-                                placeholder='Password'
-                                leftIcon={
-                                    <Icon
-                                        name='lock'
-                                        size={24}
-                                        color='black'
-                                    />
-                                }
-                            />
-                            <Input
-                                placeholder='Confirm Password'
-                                leftIcon={
-                                    <Icon
-                                        name='lock'
-                                        size={24}
-                                        color='black'
-                                    />
-                                }
-                            />
-                            <Button title="Create Account" onPress={() => alert('button pressed for signup')} />
-                            <Text>By creating an account, you agree to our <Text style={styles.link}>Terms</Text></Text>
+                            <CreateUserForm />
+                            <Text style={{marginTop: 30}}>By creating an account, you agree to our <Text style={styles.link}>Terms</Text></Text>
                                 <Text>Already have an account?<Text
                                     style={styles.link}
                                     onPress={() => this.props.navigation.navigate('Login')}>
@@ -78,7 +46,7 @@ class WelcomeScreen extends Component {
       }
 }
 
-export default WelcomeScreen
+export default connect(null, {getAllItems})(WelcomeScreen)
 
 const styles = StyleSheet.create({
     container: {
@@ -97,5 +65,8 @@ const styles = StyleSheet.create({
     link: {
         color: 'blue',
         textDecorationLine: 'underline'
+    },
+    name: {
+        flexDirection: 'row'
     }
 })

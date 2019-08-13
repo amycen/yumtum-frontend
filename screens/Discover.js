@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, Dimensions, Animated, PanResponder } from "react-native";
+import { View, Text, Image, TouchableWithoutFeedback, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import {selectItem} from '../actions/item'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
-
-const items = [
-    {id: "1", uri: require('../assets/1.jpg')},
-    {id: "2", uri: require('../assets/2.jpg')},
-    {id: "3", uri: require('../assets/3.jpg')},
-    {id: "4", uri: require('../assets/4.jpg')},
-    {id: "5", uri: require('../assets/5.jpg')},
-    {id: "6", uri: require('../assets/6.jpg')}
-]
 
 class Discover extends Component {
 
@@ -19,6 +12,7 @@ class Discover extends Component {
         super()
 
         this.position = new Animated.ValueXY()
+        this.selectedItem = ''
         this.state = {
             currentIndex: 0
         }
@@ -77,6 +71,8 @@ class Discover extends Component {
                         this.setState({currentIndex: this.state.currentIndex + 1},
                         () => {
                             this.position.setValue({x: 0, y:0})
+                            this.props.selectItem(this.selectedItem)
+                            this.props.navigation.navigate('Checkout')
                         })
                     })
                 }
@@ -102,16 +98,17 @@ class Discover extends Component {
 
 
     renderItems = () => {
-        return items.map((item, i) => {
+        return this.props.allItems.map((item, i) => {
             if(i < this.state.currentIndex) {
+                this.selectedItem = item
                 return null
             }
             else if(i == this.state.currentIndex){
                 return (
                     <Animated.View
-                    {...this.PanResponder.panHandlers}
-                    key={item.id}
-                    style={[this.rotateAndTranslate, {height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, padding: 10, position: 'absolute'}]}
+                        {...this.PanResponder.panHandlers}
+                        key={item.id}
+                        style={[this.rotateAndTranslate, {height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22, position: 'absolute'}]}
                     >
                         <Animated.View style={{opacity: this.likeOpacity, transform: [{ rotate: '-25deg'}], position: 'absolute', top: 50, left: 40, zIndex: 1000}}>
                             <Text style={{borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10}}>LIKE</Text>
@@ -120,10 +117,13 @@ class Discover extends Component {
                         <Animated.View style={{opacity: this.nopeOpacity, transform: [{ rotate: '25deg'}], position: 'absolute', top: 50, right: 40, zIndex: 1000}}>
                             <Text style={{borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10}}>NOPE</Text>
                         </Animated.View>
-                        
+                        <View style={styles.price}>
+                            <Text style={{fontSize: 16}}>${item.price}</Text>
+                        </View>
                         <Image 
-                        source={item.uri}
+                        source={{uri: item.image}}
                         style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20}} 
+                        onPress={() => this.props.navigation.navigate('Detail')}
                         />
                     </Animated.View>
                 )
@@ -132,10 +132,13 @@ class Discover extends Component {
                 return (
                     <Animated.View
                     key={item.id}
-                    style={[{opacity: this.nextCardOpacity, transform: [{scale: this.nextCardScale}], height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, padding: 10, position: 'absolute'}]}
+                    style={[{opacity: this.nextCardOpacity, transform: [{scale: this.nextCardScale}], height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22, position: 'absolute'}]}
                     >
+                        <View style={styles.price}>
+                            <Text style={{fontSize: 16}}>${item.price}</Text>
+                        </View>
                         <Image 
-                        source={item.uri}
+                        source={{uri: item.image}}
                         style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20}} 
                         />
                     </Animated.View>
@@ -161,13 +164,10 @@ class Discover extends Component {
                   />
                   </View>
           </TouchableWithoutFeedback>  */}
-                <View style={{height: 50}}>
-
-                </View>
                 <View style={{flex: 1}}>
                     {this.renderItems()}
                 </View>
-                <View style={{height: 60}}>
+                <View style={{height: 30}}>
 
                 </View>
             </View>
@@ -175,4 +175,22 @@ class Discover extends Component {
       }
 }
 
-export default Discover
+const msp = state => {
+    return {
+      allItems: state.item.allItems
+    }
+}
+
+export default connect(msp, {selectItem})(Discover)
+
+const styles = StyleSheet.create({
+    price: {
+        padding: 5,
+        position: 'absolute',
+        bottom: 20, 
+        right: 40,
+        backgroundColor: 'rgba(299,299,299,0.6)',
+        color: 'black',
+        zIndex: 100
+    }
+})

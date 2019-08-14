@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {selectItem} from '../actions/item'
+import CardFlip from 'react-native-card-flip'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -117,14 +118,16 @@ class Discover extends Component {
                         <Animated.View style={{opacity: this.nopeOpacity, transform: [{ rotate: '25deg'}], position: 'absolute', top: 50, right: 40, zIndex: 1000}}>
                             <Text style={{borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10}}>NOPE</Text>
                         </Animated.View>
-                        <View style={styles.price}>
-                            <Text style={{fontSize: 16}}>${item.price}</Text>
-                        </View>
-                        <Image 
-                        source={{uri: item.image}}
-                        style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20}} 
-                        onPress={() => this.props.navigation.navigate('Detail')}
-                        />
+                        
+                        
+                                <View style={styles.price}>
+                                <Text style={{fontSize: 16}}>${item.price.toFixed(2)}</Text>
+                                </View>
+                            <Image 
+                            source={{uri: item.image}}
+                            style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20}} 
+                            onPress={() => this.props.navigation.navigate('Detail')}
+                            />
                     </Animated.View>
                 )
             }
@@ -135,7 +138,7 @@ class Discover extends Component {
                     style={[{opacity: this.nextCardOpacity, transform: [{scale: this.nextCardScale}], height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22, position: 'absolute'}]}
                     >
                         <View style={styles.price}>
-                            <Text style={{fontSize: 16}}>${item.price}</Text>
+                            <Text style={{fontSize: 16}}>${item.price.toFixed(2)}</Text>
                         </View>
                         <Image 
                         source={{uri: item.image}}

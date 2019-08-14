@@ -16,6 +16,7 @@ import HopOnIt from "./screens/HopOnIt";
 import Settings from "./screens/Settings"
 import Checkout from "./screens/Checkout"
 import Pay from "./screens/Pay"
+import OrderStatus from "./screens/OrderStatus"
 
 import {createSwitchNavigator, createAppContainer, createDrawerNavigator, createBottomTabNavigator, createStackNavigator} from 'react-navigation'
 import { Provider, connect } from "react-redux"
@@ -100,7 +101,8 @@ const CheckoutStackNavigator = createStackNavigator({
       }
       }
     },
-    Pay: { screen: Pay}
+    Pay: { screen: Pay},
+    OrderStatus: {screen: OrderStatus}
   },{
     defaultNavigationOptions: {gesturesEnabled: false}
   })

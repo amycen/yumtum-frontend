@@ -42,7 +42,6 @@ class LoginForm extends Component {
                         autoCorrect={false}
                         onSubmitEditing={() => this.passwordInput.focus()}
                         onChangeText={(text) => this.handleChange(text, 'username')}
-                        shake={!!this.props.errors}
                         />
                     <TextInput 
                         style={styles.input}
@@ -52,7 +51,6 @@ class LoginForm extends Component {
                         returnKeyType="go"
                         ref={(input) => this.passwordInput = input}
                         onChangeText={(text) => this.handleChange(text, 'password')}
-                        shake={!!this.props.errors}
                     />
                     <TouchableOpacity> 
                         <Button containerStyle={styles.btnContainer} title="Login" raised onPress={() => this.handleSubmit()}/>

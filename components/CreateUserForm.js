@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux'
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { Input, Button } from "react-native-elements";
 import Icon from '@expo/vector-icons/Feather'
-import { createUser } from "../actions/user";
+import { createUser } from "../actions/user"
+import Text from './CustomText';
 
 class CreateUserForm extends Component {
     state = { 
@@ -13,22 +14,21 @@ class CreateUserForm extends Component {
         email: '',
         password: '',
         confirmPassword: '',
-        passwordErrorMsg: ''
+        passwordErrorMsg: '',
+        errorMessage: ''
      }
 
     handleSubmit = () => {
-        if (this.state.password === this.state.confirmPassword){
+        if (this.state.firstName === ''){
+            this.setState({
+                errorMessage: 'Please enter all fields.'
+            }, () => {
+                this.firstNameInput.shake()
+            })
+        }
+        else if (this.state.password === this.state.confirmPassword){
             let formData = {...this.state}
             this.props.createUser(formData)
-            this.setState({
-                firstName: '',
-                lastName: '',
-                phone: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                passwordErrorMsg: ''
-            })
         }
         else {
             this.setState({
@@ -43,20 +43,21 @@ class CreateUserForm extends Component {
     render() {
         return (
             <Fragment>
-                <Text>TESTING AREA: {this.props.errors}</Text>
                 <View style={styles.name}>
                     <View>
                         <Input
-                            containerStyle={{width: 210, marginBottom: 15}}
+                            containerStyle={{width: 210, marginBottom: 15, paddingLeft: 30, paddingRight: 20}}
+                            inputStyle={{paddingLeft: 10}}
                             placeholder='First Name'
                             leftIcon={
                                 <Icon
-                                    name='user'
-                                    size={24}
+                                name='user'
+                                size={24}
                                     color='black'
-                                />
+                                    />
                             }
                             onChangeText={(firstName) => this.setState({firstName})}
+                            ref={(input) => this.firstNameInput = input}
                             value={this.state.firstName}
                             returnKeyType="next"
                             autoCorrect={false}
@@ -65,7 +66,8 @@ class CreateUserForm extends Component {
                     </View>
                     <View>
                         <Input
-                            containerStyle={{width: 200, marginBottom: 15}}
+                            inputStyle={{paddingLeft: 5}}
+                            containerStyle={{width: 200, marginBottom: 15, paddingRight: 30}}
                             placeholder='Last Name'
                             onChangeText={(lastName) => this.setState({lastName})}
                             ref={(input) => this.lastNameInput = input}
@@ -78,8 +80,9 @@ class CreateUserForm extends Component {
                 </View>
 
                 <Input
+                    inputStyle={{paddingLeft: 10}}
                     onChangeText={(phone) => this.setState({phone})}
-                    containerStyle={{marginBottom: 15}}
+                    containerStyle={styles.inputContainer}
                     placeholder='Phone'
                     leftIcon={
                         <Icon
@@ -96,8 +99,9 @@ class CreateUserForm extends Component {
                     keyboardType='numeric'
                 />
                 <Input
+                    inputStyle={{paddingLeft: 10}}
                     onChangeText={(email) => this.setState({email})}
-                    containerStyle={{marginBottom: 15}}
+                    containerStyle={styles.inputContainer}
                     placeholder='Email'
                     leftIcon={
                         <Icon
@@ -114,7 +118,8 @@ class CreateUserForm extends Component {
                     keyboardType='email-address'
                     />
                 <Input
-                    containerStyle={{marginBottom: 15}}
+                    inputStyle={{paddingLeft: 10}}
+                    containerStyle={styles.inputContainer}
                     placeholder='Password'
                     leftIcon={
                         <Icon
@@ -135,7 +140,8 @@ class CreateUserForm extends Component {
                     secureTextEntry
                     />
                 <Input
-                    containerStyle={{marginBottom: 15}}
+                    inputStyle={{paddingLeft: 10}}
+                    containerStyle={styles.inputContainer}
                     placeholder='Confirm Password'
                     leftIcon={
                         <Icon
@@ -152,10 +158,10 @@ class CreateUserForm extends Component {
                     returnKeyType="go"
                     autoCorrect={false}
                     secureTextEntry
-                />
-                <Text style={{color: 'red'}}>{this.props.errors}</Text>
+                    />
+                <Text style={{color: 'red'}}>{this.state.errorMessage || this.props.errors}</Text>
                 <TouchableOpacity> 
-                    <Button containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} title="Create Account" raised onPress={() => this.handleSubmit()} />
+                    <Button titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} title="Create Account" raised onPress={() => this.handleSubmit()} />
                 </TouchableOpacity>
             </Fragment>
         );
@@ -190,5 +196,10 @@ const styles = StyleSheet.create({
     },
     name: {
         flexDirection: 'row'
+    },
+    inputContainer: {
+        marginBottom: 15, 
+        paddingLeft: 30, 
+        paddingRight: 30
     }
 })

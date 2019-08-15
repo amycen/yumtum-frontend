@@ -1,4 +1,4 @@
-const API_URL = 'http://10.9.105.87:3000'
+const API_URL = 'http://10.9.107.188:3000'
 const HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json"

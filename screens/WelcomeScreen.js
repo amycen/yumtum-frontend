@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, ImageBackground, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView } from 'react-native';
 import {Input, Button} from 'react-native-elements'
 import Icon from '@expo/vector-icons/FontAwesome5'
 import CreateUserForm from '../components/CreateUserForm';
 import {connect} from 'react-redux'
 import {getAllItems} from '../actions/item'
+import Text from '../components/CustomText'
 
 class WelcomeScreen extends Component {
 
@@ -23,27 +24,36 @@ class WelcomeScreen extends Component {
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <ImageBackground 
                     style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
                         width: '100%',
                         height: '100%',
-                        opacity: 0.75
+                        position: 'absolute'
                     }}
-                    source={{ uri: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80'}}
+                    imageStyle={{
+                        top: 190
+                        //transform: [{ rotate: '-180deg' }]
+                    }} 
+                    source={{ uri: 'https://images.unsplash.com/photo-1501959915551-4e8d30928317?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80'}}
                 >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <View style={styles.container}>
-                            <Text style={styles.logo}>YUMTUM</Text>
-                            <Text style={styles.sublogo}>Food At Your Fingertips</Text>
-                            <CreateUserForm />
-                            <Text style={{marginTop: 30}}>By creating an account, you agree to our <Text style={styles.link}>Terms</Text></Text>
-                                <Text>Already have an account?<Text
-                                    style={styles.link}
-                                    onPress={() => this.props.navigation.navigate('Login')}>
-                                    Log In
+                            <View style={styles.header}>
+                                <Text type='medium' style={styles.logo}>YUMTUM</Text>
+                                <Text style={styles.sublogo}>Food At Your Fingertips</Text>
+                            </View>
+                            <View style={styles.formContainer}>
+                                <CreateUserForm />
+                                <Text style={{marginTop: 30}}>By creating an account, you agree to our <Text style={styles.link}>Terms</Text></Text>
+                                    <Text>Already have an account?<Text
+                                        style={styles.link}
+                                        onPress={() => this.props.navigation.navigate('Login')}>
+                                        Log In
+                                    </Text>
                                 </Text>
-                            </Text>
+                            <Button
+                                titleStyle={{fontFamily: 'comfortaa-semibold'}}
+                                    onPress={() => this.props.navigation.navigate('Profile')}
+                                    title="Log In" />
+                            </View>
                         </View>
                     </TouchableWithoutFeedback>
                 </ImageBackground>
@@ -64,7 +74,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+    },
+    header: {
+        position: 'absolute',
+        top: 65
+    },
+    formContainer: {
+        position: 'absolute',
+        top: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     logo: {
         textAlign: 'center',

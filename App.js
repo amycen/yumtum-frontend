@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, ActivityIndicator} from 'react-native';
 import Icon from '@expo/vector-icons/FontAwesome5'
 
 import {MultiBar, MultiBarToggle} from 'react-native-multibar';
@@ -21,28 +21,34 @@ import {createSwitchNavigator, createAppContainer, createDrawerNavigator, create
 import { Provider, connect } from "react-redux"
 import { createUser } from './actions/user';
 import store from './store/store'
-
+import * as Font from 'expo-font'
 
 class App extends Component {
 
   state = {
-    username: ''
+    fontLoaded: false
   }
 
-  createUserSubmitHandler = () => {
-    alert("SUBMITTED USER")
-  }
-
-  createUserChangeHandler = username => {
-    this.setState({
-      username: username
+  async componentDidMount() {
+    await Font.loadAsync({
+      'comfortaa-regular': require('./assets/fonts/Comfortaa-Regular.ttf'),
+      'comfortaa-bold': require('./assets/fonts/Comfortaa-Bold.ttf'),
+      'comfortaa-light': require('./assets/fonts/Comfortaa-Light.ttf'),
+      'comfortaa-medium': require('./assets/fonts/Comfortaa-Medium.ttf'),
+      'comfortaa-semibold': require('./assets/fonts/Comfortaa-SemiBold.ttf'),
     })
+    this.setState({fontLoaded: true})
   }
 
   render(){
     return (
         <Provider store={store}>
-          <AppContainer />
+          {this.state.fontLoaded ? (<AppContainer />) : 
+            (
+              <View style={styles.container}>
+                <ActivityIndicator size='large' />
+              </View>
+            )}
         </Provider>
     )
   }

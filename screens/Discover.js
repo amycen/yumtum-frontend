@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import {selectItem, incrementCurrItemIdx} from '../actions/item'
 import Icon from '@expo/vector-icons/Feather'
+import {selectItem} from '../actions/item'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -68,8 +68,9 @@ class Discover extends Component {
                     }).start(() => {
                             this.position.setValue({x: 0, y:0})
                             this.props.selectItem(this.selectedItem)
-                            //this.props.incrementCurrItemIdx()
+                            console.warn("current idx", this.props.currItemIdx )
                             this.props.navigation.navigate('Checkout')
+                            console.warn("current idx", this.props.currItemIdx )
                     })
                 }
                 
@@ -77,7 +78,6 @@ class Discover extends Component {
                     Animated.spring(this.position,{
                         toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy}
                     }).start(() => {
-                        //this.props.incrementCurrItemIdx()
                         this.props.selectItem(this.selectedItem)
                         this.position.setValue({x: 0, y:0})
                     })
@@ -147,6 +147,7 @@ class Discover extends Component {
 
     render() {
         return (
+            
             <View style={{flex: 1}}>
             {/* <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Detail')}>
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -181,7 +182,7 @@ const msp = state => {
     }
 }
 
-export default connect(msp, {selectItem, incrementCurrItemIdx})(Discover)
+export default connect(msp, {selectItem})(Discover)
 
 const styles = StyleSheet.create({
     price: {

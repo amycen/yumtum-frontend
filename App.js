@@ -7,7 +7,6 @@ import {MultiBar, MultiBarToggle} from 'react-native-multibar';
 import WelcomeScreen from "./screens/WelcomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import Detail from "./screens/Detail"
-import SignUpScreen from "./screens/SignUpScreen";
 import DashboardScreen from "./screens/DashboardScreen"; 
 import Profile from "./screens/Profile";  
 import Discover from "./screens/Discover"; 

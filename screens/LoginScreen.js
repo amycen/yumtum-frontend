@@ -7,6 +7,12 @@ import LoginForm from '../components/LoginForm';
 
 
 class LoginScreen extends Component {
+
+    componentDidUpdate() {
+      if(this.props.userID){
+        this.props.navigation.navigate('Dashboard')
+      }
+    }
     render() {
         return (
           <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -25,7 +31,6 @@ class LoginScreen extends Component {
                   <View style={styles.container}>
                     <View style={styles.formContainer}>
                       <LoginForm />
-                      <Button title="Login" onPress={() => this.props.navigation.navigate('Dashboard')} />
                     </View>
                     <View style={styles.footer}>
                       <Text>Don't have an account?
@@ -45,7 +50,9 @@ class LoginScreen extends Component {
 }
 
 const msp = state => {
-    return state
+    return {
+      userID: state.user.userID
+    }
 }
 
 /* const mdp = dispatch => {

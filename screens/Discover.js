@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import {selectItem} from '../actions/item'
-import CardFlip from 'react-native-card-flip'
+import {selectItem, incrementCurrItemIdx} from '../actions/item'
+import Icon from '@expo/vector-icons/Feather'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -14,9 +14,6 @@ class Discover extends Component {
 
         this.position = new Animated.ValueXY()
         this.selectedItem = ''
-        this.state = {
-            currentIndex: 0
-        }
 
         this.rotate = this.position.x.interpolate({
             inputRange: [-SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2],
@@ -69,22 +66,20 @@ class Discover extends Component {
                     Animated.spring(this.position,{
                         toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy}
                     }).start(() => {
-                        this.setState({currentIndex: this.state.currentIndex + 1},
-                        () => {
                             this.position.setValue({x: 0, y:0})
                             this.props.selectItem(this.selectedItem)
+                            //this.props.incrementCurrItemIdx()
                             this.props.navigation.navigate('Checkout')
-                        })
                     })
                 }
+                
                 else if(gestureState.dx < -120) {
                     Animated.spring(this.position,{
                         toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy}
                     }).start(() => {
-                        this.setState({currentIndex: this.state.currentIndex + 1},
-                        () => {
-                            this.position.setValue({x: 0, y:0})
-                        })
+                        //this.props.incrementCurrItemIdx()
+                        this.props.selectItem(this.selectedItem)
+                        this.position.setValue({x: 0, y:0})
                     })
                 }
                 else {
@@ -100,11 +95,11 @@ class Discover extends Component {
 
     renderItems = () => {
         return this.props.allItems.map((item, i) => {
-            if(i < this.state.currentIndex) {
-                this.selectedItem = item
+            if(i < this.props.currItemIdx) {
                 return null
             }
-            else if(i == this.state.currentIndex){
+            else if(i == this.props.currItemIdx){
+                this.selectedItem = item
                 return (
                     <Animated.View
                         {...this.PanResponder.panHandlers}
@@ -169,6 +164,7 @@ class Discover extends Component {
           </TouchableWithoutFeedback>  */}
                 <View style={{flex: 1}}>
                     {this.renderItems()}
+                    <Text style={styles.bottomText}>More food options are coming! <Icon name='truck' size={24}/> </Text>
                 </View>
                 <View style={{height: 30}}>
 
@@ -180,11 +176,12 @@ class Discover extends Component {
 
 const msp = state => {
     return {
-      allItems: state.item.allItems
+      allItems: state.item.allItems,
+      currItemIdx: state.item.currItemIdx
     }
 }
 
-export default connect(msp, {selectItem})(Discover)
+export default connect(msp, {selectItem, incrementCurrItemIdx})(Discover)
 
 const styles = StyleSheet.create({
     price: {
@@ -192,8 +189,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 20, 
         right: 40,
-        backgroundColor: 'rgba(299,299,299,0.6)',
+        backgroundColor: 'white',
+        opacity: 0.5,
         color: 'black',
         zIndex: 100
+    },
+    bottomText: {
+        alignSelf: 'center',
+        position: 'absolute',
+        top: SCREEN_HEIGHT * 0.3,
+        color: '#585858', 
+        fontSize: 20,
+        zIndex: -2
     }
 })

@@ -12,6 +12,12 @@ class WelcomeScreen extends Component {
         this.props.getAllItems()
     }
     
+    componentDidUpdate() {
+        if(this.props.userID){
+            this.props.navigation.navigate('Discover')
+        }
+    }
+
     render() {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -46,7 +52,13 @@ class WelcomeScreen extends Component {
       }
 }
 
-export default connect(null, {getAllItems})(WelcomeScreen)
+const msp = state => {
+    return {
+        userID: state.user.userID
+    }
+}
+
+export default connect(msp, {getAllItems})(WelcomeScreen)
 
 const styles = StyleSheet.create({
     container: {

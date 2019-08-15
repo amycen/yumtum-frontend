@@ -34,7 +34,6 @@ class LoginForm extends Component {
     render() {
         return (
                 <View style={styles.container} >
-                    <Text>ERROR MSG: {this.props.errors}</Text>
                     <TextInput 
                         style={styles.input}
                         placeholder='username'

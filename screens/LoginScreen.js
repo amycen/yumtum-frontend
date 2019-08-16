@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, StyleSheet, Button, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import {connect} from 'react-redux'
 import { createUser } from "../actions/user";
 import { Input, Icon } from "react-native-elements";
 import LoginForm from '../components/LoginForm';
+import Text from '../components/CustomText'
 
 
 class LoginScreen extends Component {
@@ -22,13 +23,17 @@ class LoginScreen extends Component {
                         top: 0,
                         left: 0,
                         width: '100%',
-                        height: '100%',
-                        opacity: 0.75
+                        height: '100%'
                     }}
-                    source={{ uri: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80'}}
+                    source={ require('../assets/login.jpg')}
               >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                   <View style={styles.container}>
+                    <View style={styles.welcome}>
+
+                    <Text type='semibold' style={{fontSize: 30, marginBottom: 5}}>We Missed You</Text>
+                    <Text type='semibold'style={{fontSize: 24}}>Let's Get You Some Food!</Text>
+                    </View>
                     <View style={styles.formContainer}>
                       <LoginForm />
                     </View>
@@ -37,7 +42,7 @@ class LoginScreen extends Component {
                           <Text
                             style={styles.link}
                             onPress={() => this.props.navigation.navigate('Welcome')}>
-                            Sigh Up Here! 
+                            Sign Up Here! 
                           </Text>
                       </Text>
                     </View>
@@ -65,14 +70,22 @@ export default connect(msp, {createUser})(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center'
+    flex: 1
   },
+  welcome: {
+      marginTop: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      paddingTop: 25,
+      height: 200,
+    },  
   formContainer: {
-    alignItems: 'stretch'
+    marginBottom: 20,
+    alignItems: 'stretch',
   },
   footer: {
+    marginTop: 165,
     alignItems: 'center',
     justifyContent: 'center'
   },

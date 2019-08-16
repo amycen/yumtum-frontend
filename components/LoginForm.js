@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { login } from "../actions/user";
+import Icon from '@expo/vector-icons/Feather'
+import Text from './CustomText'
 
 class LoginForm extends Component {
 
     state = {
         username: '',
         password: ''
-    }
-
-    handleChange(text, field){
-        if(field === 'username'){
-            this.setState({username: text})
-        }
-        else if(field === 'password'){
-            this.setState({password: text})
-        }
     }
 
     handleSubmit(){
@@ -34,26 +27,46 @@ class LoginForm extends Component {
     render() {
         return (
                 <View style={styles.container} >
-                    <TextInput 
-                        style={styles.input}
-                        placeholder='username'
-                        placeholderTextColor="#575757"
+                    <Input 
+                        inputStyle={{paddingLeft: 10}}
+                        inputContainerStyle={{backgroundColor: 'white', opacity: 0.8,}}
+                        onChangeText={(username) => this.setState({username})}
+                        containerStyle={styles.inputContainer}
+                        placeholder='Username'
+                        leftIcon={
+                            <Icon
+                            name='user'
+                            size={24}
+                            color='black'
+                            />
+                        }
+                        ref={(input) => this.usernameInput = input}
+                        value={this.state.username}
                         returnKeyType="next"
                         autoCorrect={false}
                         onSubmitEditing={() => this.passwordInput.focus()}
-                        onChangeText={(text) => this.handleChange(text, 'username')}
-                        />
-                    <TextInput 
-                        style={styles.input}
-                        placeholder='password' 
-                        placeholderTextColor="#575757"
-                        secureTextEntry
-                        returnKeyType="go"
+                    />
+                    <Input 
+                        inputContainerStyle={{backgroundColor: 'white', opacity: 0.8}}
+                        inputStyle={{paddingLeft: 10}}
+                        containerStyle={styles.inputContainer}
+                        placeholder='Password'
+                        leftIcon={
+                            <Icon
+                            name='lock'
+                            size={24}
+                            color='black'
+                            />
+                        }
+                        onChangeText={(password) => this.setState({password})}
                         ref={(input) => this.passwordInput = input}
-                        onChangeText={(text) => this.handleChange(text, 'password')}
+                        value={this.state.password}
+                        returnKeyType="go"
+                        autoCorrect={false}
+                        secureTextEntry
                     />
                     <TouchableOpacity> 
-                        <Button containerStyle={styles.btnContainer} title="Login" raised onPress={() => this.handleSubmit()}/>
+                        <Button titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStyle={styles.btnContainer} title="Login" raised onPress={() => this.handleSubmit()}/>
                     </TouchableOpacity>
                 </View>
         );
@@ -71,7 +84,6 @@ export default connect(msp, {login})(LoginForm)
 
 const styles = StyleSheet.create({
     container: {
-        padding: 30
     },
     input: {
         height: 45,
@@ -82,7 +94,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     btnContainer: {
+        marginTop: 15,
         width: "50%",
         alignSelf: 'center'
+    },
+    inputContainer: {
+        marginBottom: 15, 
+        paddingLeft: 30, 
+        paddingRight: 30
     }
 })

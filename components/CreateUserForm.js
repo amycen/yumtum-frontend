@@ -161,7 +161,7 @@ class CreateUserForm extends Component {
                     />
                 <Text style={{color: 'red'}}>{this.state.errorMessage || this.props.errors}</Text>
                 <TouchableOpacity> 
-                    <Button titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} title="Create Account" raised onPress={() => this.handleSubmit()} />
+                    <Button titleStyle={{fontFamily: 'comfortaa-semibold', fontSize: 18}} containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} title="Create Account" raised onPress={() => this.handleSubmit()} />
                 </TouchableOpacity>
             </Fragment>
         );

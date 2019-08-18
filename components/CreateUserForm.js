@@ -14,16 +14,48 @@ class CreateUserForm extends Component {
         email: '',
         password: '',
         confirmPassword: '',
-        passwordErrorMsg: '',
-        errorMessage: ''
+        firstNameErr: '',
+        lastNameErr: '',
+        phoneErr: '',
+        emailErr: '',
+        passwordErr: ''
      }
 
     handleSubmit = () => {
         if (this.state.firstName === ''){
             this.setState({
-                errorMessage: 'Please enter all fields.'
+                firstNameErr: 'Please enter first name'
             }, () => {
                 this.firstNameInput.shake()
+                
+            })
+        }
+        else if (this.state.lastName === ''){
+            this.setState({
+                lastNameErr: 'Please enter last name'
+            }, () => {
+                this.lastNameInput.shake()
+            })
+        }
+        else if (this.state.phone === ''){
+            this.setState({
+                phoneErr: 'Please enter phone number'
+            }, () => {
+                this.phoneInput.shake()
+            })
+        }
+        else if (this.state.email === ''){
+            this.setState({
+                emailErr: 'Please enter email address'
+            }, () => {
+                this.emailInput.shake()
+            })
+        }
+        else if (this.state.password === ''){
+            this.setState({
+                passwordErr: 'Please enter password'
+            }, () => {
+                this.passwordInput.shake()
             })
         }
         else if (this.state.password === this.state.confirmPassword){
@@ -32,7 +64,7 @@ class CreateUserForm extends Component {
         }
         else {
             this.setState({
-                passwordErrorMsg: "Passwords Do Not Match"
+                passwordErr: "Passwords Do Not Match"
             }, () => {
                 this.passwordInput.shake()
                 this.passwordConfirmInput.shake()
@@ -56,12 +88,17 @@ class CreateUserForm extends Component {
                                     color='black'
                                     />
                             }
-                            onChangeText={(firstName) => this.setState({firstName})}
+                            onChangeText={(firstName) => this.setState({
+                                firstName: firstName,
+                                firstNameErr: ''
+                            })}
                             ref={(input) => this.firstNameInput = input}
                             value={this.state.firstName}
                             returnKeyType="next"
                             autoCorrect={false}
                             onSubmitEditing={() => this.lastNameInput.focus()}
+                            errorStyle={{color: 'red'}}
+                            errorMessage={this.state.firstNameErr}
                             />
                     </View>
                     <View>
@@ -69,19 +106,27 @@ class CreateUserForm extends Component {
                             inputStyle={{paddingLeft: 5}}
                             containerStyle={{width: 200, marginBottom: 15, paddingRight: 30}}
                             placeholder='Last Name'
-                            onChangeText={(lastName) => this.setState({lastName})}
+                            onChangeText={(lastName) => this.setState({
+                                lastName: lastName,
+                                lastNameErr: ''
+                            })}
                             ref={(input) => this.lastNameInput = input}
                             value={this.state.lastName}
                             returnKeyType="next"
                             autoCorrect={false}
                             onSubmitEditing={() => this.phoneInput.focus()}
+                            errorStyle={{color: 'red'}}
+                            errorMessage={this.state.lastNameErr}
                             />
                     </View>
                 </View>
 
                 <Input
                     inputStyle={{paddingLeft: 10}}
-                    onChangeText={(phone) => this.setState({phone})}
+                    onChangeText={(phone) => this.setState({
+                        phone: phone,
+                        phoneErr: ''
+                    })}
                     containerStyle={styles.inputContainer}
                     placeholder='Phone'
                     leftIcon={
@@ -97,10 +142,15 @@ class CreateUserForm extends Component {
                     autoCorrect={false}
                     onSubmitEditing={() => this.emailInput.focus()}
                     keyboardType='numeric'
+                    errorStyle={{color: 'red'}}
+                    errorMessage={this.state.phoneErr}
                 />
                 <Input
                     inputStyle={{paddingLeft: 10}}
-                    onChangeText={(email) => this.setState({email})}
+                    onChangeText={(email) => this.setState({
+                        email: email,
+                        emailErr: ''
+                    })}
                     containerStyle={styles.inputContainer}
                     placeholder='Email'
                     leftIcon={
@@ -116,6 +166,8 @@ class CreateUserForm extends Component {
                     autoCorrect={false}
                     onSubmitEditing={() => this.passwordInput.focus()}
                     keyboardType='email-address'
+                    errorStyle={{color: 'red'}}
+                    errorMessage={this.state.emailErr}
                     />
                 <Input
                     inputStyle={{paddingLeft: 10}}
@@ -128,7 +180,9 @@ class CreateUserForm extends Component {
                         color='black'
                         />
                     }
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({
+                        password: password
+                    })}
                     ref={(input) => this.passwordInput = input}
                     value={this.state.password}
                     returnKeyType="next"
@@ -136,8 +190,7 @@ class CreateUserForm extends Component {
                     onSubmitEditing={() => this.passwordConfirmInput.focus()}
                     secureTextEntry
                     errorStyle={{color: 'red'}}
-                    errorMessage={this.state.passwordErrorMsg}
-                    secureTextEntry
+                    errorMessage={this.state.passwordErr}
                     />
                 <Input
                     inputStyle={{paddingLeft: 10}}
@@ -151,8 +204,11 @@ class CreateUserForm extends Component {
                         />
                     }
                     errorStyle={{color: 'red'}}
-                    errorMessage={this.state.passwordErrorMsg}
-                    onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+                    errorMessage={this.state.passwordErr}
+                    onChangeText={(confirmPassword) => this.setState({
+                        confirmPassword: confirmPassword,
+                        passwordErr: ''
+                    })}
                     ref={(input) => this.passwordConfirmInput = input}
                     value={this.state.passwordConfirmInput}
                     returnKeyType="go"
@@ -161,7 +217,7 @@ class CreateUserForm extends Component {
                     />
                 <Text style={{color: 'red'}}>{this.state.errorMessage || this.props.errors}</Text>
                 <TouchableOpacity> 
-                    <Button titleStyle={{fontFamily: 'comfortaa-semibold', fontSize: 18}} containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} title="Create Account" raised onPress={() => this.handleSubmit()} />
+                    <Button buttonStyle={{backgroundColor: '#1DA2FF'}}titleStyle={{fontFamily: 'comfortaa-semibold', fontSize: 18}} containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} title="Create Account" raised onPress={() => this.handleSubmit()} />
                 </TouchableOpacity>
             </Fragment>
         );

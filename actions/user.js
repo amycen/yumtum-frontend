@@ -17,7 +17,6 @@ const createUser = ({firstName, lastName, phone, email, password}) => {
         .then(resp => resp.json())
         .then(user => {
             if (user.errors) {
-                console.warn("ERRPR", user.errors)
                 dispatch({type: USER_ERROR, payload: user.errors})
             }
             else {
@@ -41,7 +40,7 @@ const login = ({username, password}) => {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify({username: username, password: password})
+        body: JSON.stringify({username: username.toLowerCase(), password: password})
         })
         .then(resp => resp.json())
         .then(user => {
@@ -59,6 +58,8 @@ const login = ({username, password}) => {
         }) 
     }
 }
+
+
 
 export {
     createUser,

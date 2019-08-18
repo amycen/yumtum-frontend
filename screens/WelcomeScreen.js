@@ -27,7 +27,7 @@ class WelcomeScreen extends Component {
                         width: '100%',
                         height: '100%'
                     }}
-                    source={{ uri: 'https://images.unsplash.com/photo-1501959915551-4e8d30928317?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80'}}
+                    source={require('../assets/welcome.jpg')}
                 >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <View style={styles.container}>
@@ -43,10 +43,7 @@ class WelcomeScreen extends Component {
                                         Log In
                                     </Text>
                                 </Text>
-                            <Button
-                                titleStyle={{fontFamily: 'comfortaa-semibold'}}
-                                    onPress={() => this.props.navigation.navigate('Profile')}
-                                    title="Log In" />
+                            <Button title='LOGIN' onPress={()=>this.props.navigation.navigate('Discover')}/>
                           
                         </View>
                     </TouchableWithoutFeedback>
@@ -69,6 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 60
     },
     logo: {
         textAlign: 'center',
@@ -76,7 +74,8 @@ const styles = StyleSheet.create({
     },
     sublogo: {
         textAlign: 'center',
-        fontSize: 24
+        fontSize: 24,
+        paddingBottom: 20
     },
     link: {
         color: 'blue',

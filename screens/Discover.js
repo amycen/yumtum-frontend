@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
+import React, { Component, Fragment } from 'react';
+import { View, Image, TouchableOpacity, Dimensions, Animated, PanResponder, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import Icon from '@expo/vector-icons/Feather'
 import {selectItem} from '../actions/item'
+import Text from '../components/CustomText'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -68,9 +69,7 @@ class Discover extends Component {
                     }).start(() => {
                             this.position.setValue({x: 0, y:0})
                             this.props.selectItem(this.selectedItem)
-                            console.warn("current idx", this.props.currItemIdx )
                             this.props.navigation.navigate('Checkout')
-                            console.warn("current idx", this.props.currItemIdx )
                     })
                 }
                 
@@ -92,6 +91,12 @@ class Discover extends Component {
         })
     }
 
+    renderAllergens = (item) => {
+        const allergens = item.alert_notes.filter(note => note.alert_type === 'ALLERGEN')
+        return allergens.map(allergen => {
+            return <Text key={allergen.id} style={{zIndex: 50, fontSize: 14, paddingRight: 8}}>{allergen.name}</Text> 
+        })
+    }
 
     renderItems = () => {
         return this.props.allItems.map((item, i) => {
@@ -104,25 +109,31 @@ class Discover extends Component {
                     <Animated.View
                         {...this.PanResponder.panHandlers}
                         key={item.id}
-                        style={[this.rotateAndTranslate, {height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22, position: 'absolute'}]}
+                        style={[this.rotateAndTranslate, {height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22, position: 'absolute', backgroundColor: 'white'}]}
                     >
                         <Animated.View style={{opacity: this.likeOpacity, transform: [{ rotate: '-25deg'}], position: 'absolute', top: 50, left: 40, zIndex: 1000}}>
-                            <Text style={{borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10}}>LIKE</Text>
+                            <Text type='bold' style={{borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10}}>LIKE</Text>
                         </Animated.View>
                         
                         <Animated.View style={{opacity: this.nopeOpacity, transform: [{ rotate: '25deg'}], position: 'absolute', top: 50, right: 40, zIndex: 1000}}>
-                            <Text style={{borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10}}>NOPE</Text>
+                            <Text type='bold' style={{borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10}}>NOPE</Text>
                         </Animated.View>
-                        
-                        
-                                <View style={styles.price}>
-                                <Text style={{fontSize: 16}}>${item.price.toFixed(2)}</Text>
-                                </View>
+
+
+                            <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+                            
                             <Image 
                             source={{uri: item.image}}
                             style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20}} 
                             onPress={() => this.props.navigation.navigate('Detail')}
                             />
+                            {item.alert_notes.some(note => note.alert_type === 'ALLERGEN') ? (<View style={styles.allergens}>
+                                <Icon name='alert-circle' size={14} style={{paddingRight: 10}}/>
+                                {this.renderAllergens(item)}
+                            </View>)
+                            :
+                            null}
+                                
                     </Animated.View>
                 )
             }
@@ -130,7 +141,7 @@ class Discover extends Component {
                 return (
                     <Animated.View
                     key={item.id}
-                    style={[{opacity: this.nextCardOpacity, transform: [{scale: this.nextCardScale}], height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22, position: 'absolute'}]}
+                    style={[{opacity: this.nextCardOpacity, transform: [{scale: this.nextCardScale}], height: SCREEN_HEIGHT-240, width: SCREEN_WIDTH, paddingLeft: 22, paddingRight: 22, paddingTop: 22,backgroundColor: 'white', position: 'absolute'}]}
                     >
                         <View style={styles.price}>
                             <Text style={{fontSize: 16}}>${item.price.toFixed(2)}</Text>
@@ -139,6 +150,12 @@ class Discover extends Component {
                         source={{uri: item.image}}
                         style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20}} 
                         />
+                        {item.alert_notes.some(note => note.alert_type === 'ALLERGEN') ? (<View style={styles.allergens}>
+                                <Icon name='alert-circle' size={14} style={{paddingRight: 10}}/>
+                                {this.renderAllergens(item)}
+                            </View>)
+                            :
+                            null}
                     </Animated.View>
                 )
             }
@@ -149,6 +166,8 @@ class Discover extends Component {
         return (
             
             <View style={{flex: 1}}>
+                
+            
             {/* <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Detail')}>
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Image 
@@ -188,19 +207,25 @@ const styles = StyleSheet.create({
     price: {
         padding: 5,
         position: 'absolute',
-        bottom: 20, 
+        bottom: 40, 
         right: 40,
         backgroundColor: 'white',
         opacity: 0.5,
         color: 'black',
-        zIndex: 100
+        zIndex: 100,
+        fontSize: 16
     },
     bottomText: {
         alignSelf: 'center',
         position: 'absolute',
         top: SCREEN_HEIGHT * 0.3,
         color: '#585858', 
-        fontSize: 20,
+        fontSize: 18,
         zIndex: -2
+    },
+    allergens: {
+        marginTop: 10,
+        alignContent: 'flex-start',
+        flexDirection: 'row',
     }
 })

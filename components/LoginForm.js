@@ -19,10 +19,6 @@ class LoginForm extends Component {
             password: this.state.password
         }
         this.props.login(formData)
-        this.setState({
-            username: '',
-            password: ''
-        })
     }
     render() {
         return (
@@ -66,7 +62,7 @@ class LoginForm extends Component {
                         secureTextEntry
                     />
                     <TouchableOpacity> 
-                        <Button titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStyle={styles.btnContainer} title="Login" raised onPress={() => this.handleSubmit()}/>
+                        <Button buttonStyle={{backgroundColor: '#1DA2FF'}}titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStyle={styles.btnContainer} title="Login" raised onPress={() => this.handleSubmit()}/>
                     </TouchableOpacity>
                 </View>
         );

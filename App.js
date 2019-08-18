@@ -210,11 +210,11 @@ const DashboardTabNavigator = createBottomTabNavigator(
     },
     tabBarComponent: MultiBar,
     tabBarOptions: {
-      activeTintColor: '#F8F8F8',
-      inactiveTintColor: '#586589',
+      activeTintColor: '#1DA2FF',
+      inactiveTintColor: '#ABABAB',
       showLabel: false,
       style: {
-        backgroundColor: '#171F33'
+        backgroundColor: '#F2F2F2'
       }
     }
   }

@@ -1,4 +1,4 @@
-import {CREATE_USER, LOGIN, USER_ERROR} from '../actions/types'
+import {CREATE_USER, LOGIN, USER_ERROR, GET_ALL_ORDERS} from '../actions/types'
 
 const initialState = {
     firstName: '',

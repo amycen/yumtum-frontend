@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { View, Text, StyleSheet, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native';
 import {connect} from 'react-redux'
-import { createUser } from "../actions/user";
+import { setPrice } from "../actions/order";
 import { Input, Icon, Divider, ButtonGroup, Button } from "react-native-elements";
 import LoginForm from '../components/LoginForm';
 
@@ -101,10 +101,14 @@ class Checkout extends Component {
                         </View>
                     </View>
 
-                <Button containerStyle={{marginTop: 30}} onPress={() => this.props.navigation.navigate("Pay")} title={`Pay ${total.toFixed(2)}`} />
+                <Button containerStyle={{marginTop: 30}} 
+                    onPress={() => {
+                        this.props.setPrice(subtotal, tax, tips)
+                        this.props.navigation.navigate("Pay")}
+                    } 
+                    title={`Pay ${total.toFixed(2)}`}
+                />
                 </View>
-
-                
             </View>
             </TouchableWithoutFeedback>
         );
@@ -116,7 +120,7 @@ const msp = state => {
         selectedItem: state.item.selectedItem
     }
 }
-export default connect(msp)(Checkout)
+export default connect(msp, {setPrice})(Checkout)
 
 const styles = StyleSheet.create({
     container: {

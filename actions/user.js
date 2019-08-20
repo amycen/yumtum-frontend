@@ -32,7 +32,7 @@ const createUser = ({firstName, lastName, phone, email, password}) => {
     
 }
 
-const login = ({username, password}) => {
+const login = ({email, password}) => {
     return function (dispatch) {
         fetch(`${API_URL}/login`, {
         method: "POST",
@@ -40,7 +40,7 @@ const login = ({username, password}) => {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify({username: username.toLowerCase(), password: password})
+        body: JSON.stringify({email: email.toLowerCase(), password: password})
         })
         .then(resp => resp.json())
         .then(user => {

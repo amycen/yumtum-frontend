@@ -9,30 +9,30 @@ import Text from './CustomText'
 class LoginForm extends Component {
 
     state = {
-        username: '',
+        email: '',
         password: ''
     }
     
     handleSubmit(){
         let formData = {
-            username: this.state.username,
+            email: this.state.email,
             password: this.state.password
         }
         this.setState({
-            username: '',
+            email: '',
             password: ''
         }, () => {this.props.login(formData)})
     }
-    
+
     render() {
         return (
                 <View style={styles.container} >
                     <Input 
                         inputStyle={{paddingLeft: 10}}
                         inputContainerStyle={{backgroundColor: 'white', opacity: 0.8,}}
-                        onChangeText={(username) => this.setState({username})}
+                        onChangeText={(email) => this.setState({email})}
                         containerStyle={styles.inputContainer}
-                        placeholder='Username'
+                        placeholder='Email'
                         leftIcon={
                             <Icon
                             name='user'
@@ -40,8 +40,8 @@ class LoginForm extends Component {
                             color='black'
                             />
                         }
-                        ref={(input) => this.usernameInput = input}
-                        value={this.state.username}
+                        ref={(input) => this.emailInput = input}
+                        value={this.state.email}
                         returnKeyType="next"
                         autoCorrect={false}
                         onSubmitEditing={() => this.passwordInput.focus()}
@@ -69,7 +69,7 @@ class LoginForm extends Component {
                     <TouchableOpacity> 
                         <Button buttonStyle={{backgroundColor: '#1DA2FF'}}titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStyle={styles.btnContainer} title="Login" raised 
                         onPress={() => {
-                            this.usernameInput.focus()
+                            this.emailInput.focus()
                             this.handleSubmit()
                         }}
                     />

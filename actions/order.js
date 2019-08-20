@@ -48,7 +48,7 @@ const placeOrder = (userID, restaurantID, quantity, itemID, subtotal, tax, tips)
             .then(orderItem =>  dispatch({
                 type: PLACE_ORDER,
                 payload: orderItem//need to refactor to return order with order Items
-            })) 
+            }))  
         })
     }
 }

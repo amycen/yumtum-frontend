@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { View, StyleSheet, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import {connect} from 'react-redux'
-import { Input, Icon, Divider, ButtonGroup, Button } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Text from '../components/CustomText'
 import {ORDER_NUM} from '../actions/constants'
 
@@ -16,11 +16,19 @@ class OrderStatus extends Component {
             <View style={styles.container}>
             {this.props.lastOrderItem ?
                 (<Fragment>
-                    <Text type='semibold'>Food is on the way!</Text>
-                    <Text>Order #{ORDER_NUM + this.props.order.id}</Text>
-                    <Text>Total: ${this.orderTotal().toFixed(2)}</Text>
-                    <Text>Status: {this.props.order.status}</Text>
-                    <Button title="GO BACK TO PROFILE" onPress={() => this.props.navigation.navigate('Profile')}/>
+                    <View style={{marginBottom: 20}}>
+                    <Text type='semibold' style={styles.title}>You Are All Set</Text>
+                    <Text style={styles.text}>Order #{ORDER_NUM + this.props.order.id}</Text>
+                    <Text style={styles.text}>{this.props.lastOrderItem.name}</Text>
+                    <Text style={styles.text}>Total: ${this.orderTotal().toFixed(2)}</Text>
+                    <Text style={styles.text}>Status: Order Received</Text>
+                    </View>
+                    <Button title="Back to Home Page"
+                        buttonStyle={{backgroundColor: '#1DA2FF'}}
+                        titleStyle={{fontFamily: 'comfortaa-semibold', fontSize: 18}} 
+                        containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} 
+                        onPress={() => this.props.navigation.navigate('Discover')}
+                    />
                 </Fragment>)
                     : <ActivityIndicator size="large" color="#0000ff"/>
                 }
@@ -42,5 +50,13 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    title: {
+        fontSize: 28,
+        marginTop: 25,
+        marginBottom: 8,
+    },
+    text: {
+        fontSize: 18
     }
 })

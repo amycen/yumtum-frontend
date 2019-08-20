@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import {connect} from 'react-redux'
 import { placeOrder } from "../actions/order";
-import { Input, Icon, Divider, Button } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 import Text from '../components/CustomText'
 
-const ORDER_NUMBER = (Math.random() * 100000).toFixed(0)
 
 class Pay extends Component {
     
@@ -14,7 +13,7 @@ class Pay extends Component {
             <View style={styles.container}>
                 <Text type='semibold' style={{fontSize: 20, textAlign: 'center', padding: 20}}>Order Payment</Text>
                 <View style={styles.sectionHeader}>
-                    <Text type='semibold'>Card Details</Text>
+                    <Text type='semibold' style={{fontSize: 18, textAlign: 'center'}}>Card Details</Text>
                     
                 </View>
                 <View style={{flex: 1}}>
@@ -26,7 +25,7 @@ class Pay extends Component {
                     </View>
                 </View>
                 <View style={styles.sectionHeader}>
-                    <Text>Billing Address</Text>
+                    <Text type='semibold' style={{fontSize: 18, textAlign: 'center'}}>Billing Address</Text>
                 </View>
                 <View style={{flex: 1}}>
                     <Input placeholder='Street' />
@@ -41,7 +40,11 @@ class Pay extends Component {
                         this.props.placeOrder(this.props.userID, this.props.selectedItem.restaurant.id, 1, this.props.selectedItem.id, this.props.subtotal, this.props.tax, this.props.tips)
                         this.props.navigation.navigate("OrderStatus")
                     }}
-                    title={`Place Order`} />
+                    title={`Pay ${(this.props.subtotal + this.props.tax + this.props.tips).toFixed(2)}`}
+                    buttonStyle={{backgroundColor: '#1DA2FF'}}
+                    titleStyle={{fontFamily: 'comfortaa-semibold', fontSize: 18}} 
+                    containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800', padding: 30}} 
+                />
             </View>
         );
     }

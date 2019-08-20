@@ -13,7 +13,7 @@ const userReducer = (prevState=initialState, action) => {
         case USER_ERROR:
             return {...prevState, errors: action.payload}
         case LOGIN:
-            return {...prevState, phone: action.payload.phone, firstName: action.payload.firstName, lastName: action.payload.lastName, userID: action.payload.userID}
+            return {...prevState, phone: action.payload.phone, firstName: action.payload.firstName, lastName: action.payload.lastName, userID: action.payload.userID, errors: ''}
         default:
             return prevState
     }

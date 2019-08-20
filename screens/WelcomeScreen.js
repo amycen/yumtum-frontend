@@ -43,7 +43,6 @@ class WelcomeScreen extends Component {
                                         Log In
                                     </Text>
                                 </Text>
-                            <Button title='LOGIN' onPress={()=>this.props.navigation.navigate('Discover')}/>
                           
                         </View>
                     </TouchableWithoutFeedback>

@@ -46,7 +46,7 @@ class App extends Component {
           {this.state.fontLoaded ? (<AppContainer />) : 
             (
               <View style={styles.container}>
-                <ActivityIndicator size='large' />
+                <ActivityIndicator size="large" color="#0000ff"/>
               </View>
             )}
         </Provider>
@@ -229,7 +229,7 @@ const DashboardStackNavigator = createStackNavigator({
       headerLeft: <Icon 
         name="bars" 
         size={30} 
-        style={{paddingLeft: 10}}
+        style={{paddingLeft: 10, color: "#1DA2FF"}}
         onPress={() => navigation.openDrawer()}
       />
     }
@@ -237,8 +237,17 @@ const DashboardStackNavigator = createStackNavigator({
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
-  Dashboard: {
+  Main: {
     screen: DashboardStackNavigator
+  },
+  Discover: {
+    screen: Discover
+  },
+  Profile: {
+    screen: ProfileStack
+  },
+  Settings:{
+    screen: Settings
   },
   Logout: {
     screen: LoginScreen

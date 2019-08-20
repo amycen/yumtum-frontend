@@ -12,14 +12,18 @@ class LoginForm extends Component {
         username: '',
         password: ''
     }
-
+    
     handleSubmit(){
         let formData = {
             username: this.state.username,
             password: this.state.password
         }
-        this.props.login(formData)
+        this.setState({
+            username: '',
+            password: ''
+        }, () => {this.props.login(formData)})
     }
+    
     render() {
         return (
                 <View style={styles.container} >
@@ -61,8 +65,14 @@ class LoginForm extends Component {
                         autoCorrect={false}
                         secureTextEntry
                     />
+                    {this.props.errors ? (<Text style={styles.error}>{this.props.errors}</Text>) : null}
                     <TouchableOpacity> 
-                        <Button buttonStyle={{backgroundColor: '#1DA2FF'}}titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStyle={styles.btnContainer} title="Login" raised onPress={() => this.handleSubmit()}/>
+                        <Button buttonStyle={{backgroundColor: '#1DA2FF'}}titleStyle={{fontFamily: 'comfortaa-semibold'}} containerStyle={styles.btnContainer} title="Login" raised 
+                        onPress={() => {
+                            this.usernameInput.focus()
+                            this.handleSubmit()
+                        }}
+                    />
                     </TouchableOpacity>
                 </View>
         );
@@ -98,5 +108,9 @@ const styles = StyleSheet.create({
         marginBottom: 15, 
         paddingLeft: 30, 
         paddingRight: 30
+    },
+    error: {
+        textAlign: 'center',
+        color: 'red'
     }
 })

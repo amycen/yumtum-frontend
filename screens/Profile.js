@@ -31,7 +31,7 @@ class Profile extends Component {
           </View>
         </View>
       )
-    }).reverse()
+    })
   }
 
   renderItemList = items => {
@@ -43,7 +43,7 @@ class Profile extends Component {
   }
   
   renderLastActiveOrder = () => {
-    const lastOrder = this.props.allOrders.slice(-1)[0]
+    const lastOrder = this.props.allOrders[0]
     if(lastOrder.status !== 'COMPLETED'){
       return(
         <View style={{flex: 1}}>

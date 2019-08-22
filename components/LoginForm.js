@@ -18,10 +18,11 @@ class LoginForm extends Component {
             email: this.state.email,
             password: this.state.password
         }
+        this.props.login(formData)
         this.setState({
             email: '',
             password: ''
-        }, () => {this.props.login(formData)})
+        })
     }
 
     render() {

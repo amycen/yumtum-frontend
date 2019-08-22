@@ -11,7 +11,7 @@ class LoginScreen extends Component {
 
     componentDidUpdate() {
       if(this.props.userID){
-        this.props.navigation.navigate('Main')
+        this.props.navigation.navigate('Discover')
       }
     }
     render() {

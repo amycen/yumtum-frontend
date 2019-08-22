@@ -23,11 +23,11 @@ class OrderStatus extends Component {
                     <Text style={styles.text}>Total: ${this.orderTotal().toFixed(2)}</Text>
                     <Text style={styles.text}>Status: Order Received</Text>
                     </View>
-                    <Button title="Back to Home Page"
+                    <Button title="Back to Profiles"
                         buttonStyle={{backgroundColor: '#1DA2FF'}}
                         titleStyle={{fontFamily: 'comfortaa-semibold', fontSize: 18}} 
                         containerStlye={{marginTop: "15", marginBottom: "10", fontWeight: '800',}} 
-                        onPress={() => this.props.navigation.navigate('Discover')}
+                        onPress={() => this.props.navigation.navigate('Profile')}
                     />
                 </Fragment>)
                     : <ActivityIndicator size="large" color="#0000ff"/>

@@ -10,7 +10,7 @@ const createUser = ({firstName, lastName, phone, email, password}) => {
                 first_name: firstName,
                 last_name: lastName,
                 phone: phone,
-                email: email,
+                email: email.toLowerCase(),
                 password: password
             })
         })
